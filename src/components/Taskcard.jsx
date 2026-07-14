@@ -1,11 +1,18 @@
 import { CheckCircle2, Circle, Trash2, Pencil, Clock, CheckCheck } from "lucide-react";
-import { C } from "../constants";
-import { fmtDate, fmtDateTime, isOverdue } from "../utils";
-import { PriorityBadge, IconBtn } from "./ui";
+import { C } from "../constants.js";
+import { fmtDate, fmtDateTime, isOverdue } from "../utils.js";
+import { PriorityBadge, IconBtn } from "./ui.jsx";
 
 // Muestra una tarea individual en la lista.
 // En la vista de historial, readOnly=true oculta los botones de editar y eliminar.
-export function TaskCard({ task, onToggle, onEdit, onDelete, readOnly }) {
+export function TaskCard({
+  task,
+  onToggle,
+  onEdit,
+  onDelete,
+  readOnly,
+  disableToggle = false,
+}) {
   const overdue = !task.completed && isOverdue(task.dateLimit);
 
   return (
@@ -19,18 +26,35 @@ export function TaskCard({ task, onToggle, onEdit, onDelete, readOnly }) {
     }}>
 
       {/* Botón para marcar como completada / pendiente */}
-      <button
-        onClick={() => onToggle(task)}
-        title={task.completed ? "Marcar pendiente" : "Marcar completada"}
-        style={{
-          background: "none", border: "none", cursor: "pointer",
-          paddingTop: 1, flexShrink: 0,
-          color: task.completed ? C.success : C.dim,
-          transition: "color .15s",
-        }}
-      >
-        {task.completed ? <CheckCircle2 size={20} /> : <Circle size={20} />}
-      </button>
+      {disableToggle ? (
+        <div
+          title={task.completed ? "Completada" : "Pendiente"}
+          style={{
+            paddingTop: 1,
+            flexShrink: 0,
+            color: task.completed ? C.success : C.dim,
+          }}
+        >
+          {task.completed ? <CheckCircle2 size={20} /> : <Circle size={20} />}
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => onToggle(task)}
+          title={task.completed ? "Marcar pendiente" : "Marcar completada"}
+          style={{
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            paddingTop: 1,
+            flexShrink: 0,
+            color: task.completed ? C.success : C.dim,
+            transition: "color .15s",
+          }}
+        >
+          {task.completed ? <CheckCircle2 size={20} /> : <Circle size={20} />}
+        </button>
+      )}
 
       {/* Contenido */}
       <div style={{ flex: 1, minWidth: 0 }}>

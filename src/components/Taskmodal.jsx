@@ -7,7 +7,7 @@ import { Overlay, Field, TextInput, Textarea, CustomSelect, Btn, Alert } from ".
 // Modal para crear una tarea nueva o editar una existente.
 // Si recibe `task`, entra en modo edición y pre-llena el formulario.
 // Si no recibe `task`, entra en modo creación con valores vacíos.
-export function TaskModal({ task, userId, onClose, onDone }) {
+export function TaskModal({ task, onClose, onDone }) {
   const editing = !!task;
 
   const [form, setForm] = useState({
@@ -44,7 +44,7 @@ export function TaskModal({ task, userId, onClose, onDone }) {
 
       const res = editing
         ? await http.put(`${BASE}/tasks/${task.id}`, body)
-        : await http.post(`${BASE}/users/${userId}/tasks`, body);
+        : await http.post(`${BASE}/tasks`, body);
 
       if (!res.ok) throw new Error("No se pudo guardar la tarea");
 
