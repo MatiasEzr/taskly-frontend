@@ -8,7 +8,7 @@ Interfaz web para la aplicación de gestión de tareas Taskly.
 
 ## Requisitos
 - Node.js 18+
-- El backend corriendo en localhost:8080 → github.com/MatiasEzr/taskly-api
+- El backend corriendo en localhost:8443 → github.com/MatiasEzr/taskly-api
 
 ## Cómo correrlo
 npm install
